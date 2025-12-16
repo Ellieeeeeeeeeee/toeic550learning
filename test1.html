@@ -19,8 +19,9 @@
 </nav>
 
 <div class="container" style="max-width:900px; margin:40px auto;">
-    <h1 style="text-align:center; color:#ffffff;">文法練功房</h1>
+    <h1 style="text-align:center; color:#ffffff; font-size:48px; margin-bottom:40px;">文法練功房</h1>
 
+```
 <!-- 過去式區塊 -->
 <section class="grammar-block" style="background:#ffffff; padding:24px; margin:30px auto; border-radius:10px; text-align:left;">
     <h2 style="color:#62B5E5;">過去式 Past Tense</h2>
@@ -49,9 +50,21 @@
                 <label><input type="radio" name="q1" value="B"> finished</label><br>
                 <label><input type="radio" name="q1" value="C"> finishing</label>
             </div>
+            <div class="question">
+                <p>2. We _____ the meeting last Friday.</p>
+                <label><input type="radio" name="q2" value="A"> attend</label><br>
+                <label><input type="radio" name="q2" value="B"> attended</label><br>
+                <label><input type="radio" name="q2" value="C"> attending</label>
+            </div>
+            <div class="question">
+                <p>3. She _____ the email two hours ago.</p>
+                <label><input type="radio" name="q3" value="A"> send</label><br>
+                <label><input type="radio" name="q3" value="B"> sent</label><br>
+                <label><input type="radio" name="q3" value="C"> sending</label>
+            </div>
         </form>
-        <button onclick="checkAnswers(['B'], 'pastForm')">提交答案</button>
-        <p class="result">✔ 提示：yesterday 出現時，要用過去式。</p>
+        <button onclick="checkAnswers(['B','B','B'], 'pastForm')">提交答案</button>
+        <p class="result" id="pastResult"></p>
     </div>
 </section>
 
@@ -81,20 +94,31 @@
         <h3>📝 即時測驗與回饋</h3>
         <form name="relativeForm">
             <div class="question">
-                <p>2. The phone _____ is on the table is mine.</p>
+                <p>1. The phone _____ is on the table is mine.</p>
                 <label><input type="radio" name="q1" value="A"> who</label><br>
                 <label><input type="radio" name="q1" value="B"> which</label><br>
                 <label><input type="radio" name="q1" value="C"> where</label>
             </div>
+            <div class="question">
+                <p>2. The woman _____ works here is my teacher.</p>
+                <label><input type="radio" name="q2" value="A"> which</label><br>
+                <label><input type="radio" name="q2" value="B"> who</label><br>
+                <label><input type="radio" name="q2" value="C"> when</label>
+            </div>
+            <div class="question">
+                <p>3. The report _____ you sent was helpful.</p>
+                <label><input type="radio" name="q3" value="A"> who</label><br>
+                <label><input type="radio" name="q3" value="B"> where</label><br>
+                <label><input type="radio" name="q3" value="C"> that</label>
+            </div>
         </form>
-        <button onclick="checkAnswers(['B'], 'relativeForm')">提交答案</button>
-        <p class="result">✔ 提示：phone 是「物」，要用 which 或 that。</p>
+        <button onclick="checkAnswers(['B','B','C'], 'relativeForm')">提交答案</button>
+        <p class="result" id="relativeResult"></p>
     </div>
 </section>
+```
 
 </div>
 
 </body>
 </html>
-
-
