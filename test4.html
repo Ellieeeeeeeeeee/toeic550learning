@@ -1,310 +1,190 @@
-import React, { useEffect, useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOEIC 550 Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      background: white;
+      width: 90%;
+      max-width: 650px;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    .question-box {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .options button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1em;
+      background: #e9eef5;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    .options button:hover {
+      background: #d0d9e6;
+    }
+    #feedback {
+      margin-top: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    #explanation {
+      margin-top: 10px;
+      padding: 10px;
+      border-left: 4px solid #6b9dfc;
+      background: #f0f4ff;
+      border-radius: 6px;
+      display: none;
+    }
+    #scoreBox {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+    #nextBtn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1em;
+      background: #6b9dfc;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>TOEIC 550 Vocabulary Quiz</h2>
+  <div id="scoreBox">Score: 0</div>
 
-// TOEIC 550-level Phrases Quiz — Single-file React component
-// TailwindCSS classes are used for styling (no imports required here).
-// Features:
-// - Loads 20 questions (from user's phrase list + extensions)
-// - Shuffles questions on load or when pressing "Shuffle"
-// - Presents one question at a time (or list view toggle)
-// - Select answers, submit, see score and correct answers
-// - Restart / reshuffle functionality
+  <div class="question-box" id="question"></div>
+  <div class="options" id="options"></div>
+  
+  <div id="feedback"></div>
+  <div id="explanation"></div>
 
-const QUESTIONS = [
-  {
-    id: 1,
-    q: "The bank agreed to _____ the small startup to help with its cash flow.",
-    choices: ["make a loan to", "default on", "bail out of", "embrace"],
-    answer: 0,
-  },
-  {
-    id: 2,
-    q: "Several members decided to _____ the project because it required too much time.",
-    choices: ["accelerate", "bail out of", "facilitate", "set a boundary"],
-    answer: 1,
-  },
-  {
-    id: 3,
-    q: "The new software is designed to _____ communication between departments.",
-    choices: ["default on", "facilitate", "bail out", "be in default"],
-    answer: 1,
-  },
-  {
-    id: 4,
-    q: "The company hopes to _____ the production process with new machinery.",
-    choices: ["accelerate", "make a loan", "be in default", "set a boundary"],
-    answer: 0,
-  },
-  {
-    id: 5,
-    q: "Employees are encouraged to _____ new opportunities within the company.",
-    choices: ["embrace", "default on", "be in default", "bail out"],
-    answer: 0,
-  },
-  {
-    id: 6,
-    q: "The customer _____ the payment and was charged an additional fee.",
-    choices: ["bailed out of", "defaulted on", "accelerated", "facilitated"],
-    answer: 1,
-  },
-  {
-    id: 7,
-    q: "If the company continues to delay payments, it may _____ next month.",
-    choices: ["succeed", "offer a discount", "be in default", "open a new branch"],
-    answer: 2,
-  },
-  {
-    id: 8,
-    q: "Patients with a _____ need to schedule regular check-ups.",
-    choices: ["bail out plan", "chronic condition", "accelerated project", "boundary list"],
-    answer: 1,
-  },
-  {
-    id: 9,
-    q: "The manager had to _____ to maintain a healthy work-life balance.",
-    choices: ["set a boundary", "embrace a loan", "default on a task", "accelerate a meeting"],
-    answer: 0,
-  },
-  {
-    id: 10,
-    q: "Tomorrow’s workshop will be an _____ where participants can ask questions freely.",
-    choices: ["interactive session", "accelerated delivery", "chronic review", "default meeting"],
-    answer: 0,
-  },
-  {
-    id: 11,
-    q: "She decided to _____ and apply again next year.",
-    choices: ["accelerate the opportunity", "bail out of the plan", "default on the application", "facilitate the offer"],
-    answer: 1,
-  },
-  {
-    id: 12,
-    q: "The company made an _____ to improve employee satisfaction this year.",
-    choices: ["interactive session", "endeavor", "accelerated payment", "chronic review"],
-    answer: 1,
-  },
-  {
-    id: 13,
-    q: "Management is trying to _____ the approval process to meet the deadline.",
-    choices: ["accelerate", "bail out of", "default on", "set a boundary"],
-    answer: 0,
-  },
-  {
-    id: 14,
-    q: "The nonprofit organization plans to _____ more volunteers.",
-    choices: ["be in default", "facilitate the training of", "default on", "bail out of"],
-    answer: 1,
-  },
-  {
-    id: 15,
-    q: "When facing a major career opportunity, you should _____ it with confidence.",
-    choices: ["embrace", "default on", "accelerate", "bail out"],
-    answer: 0,
-  },
-  {
-    id: 16,
-    q: "Because of poor health, the employee has been dealing with a _____.",
-    choices: ["boundary issue", "chronic condition", "default problem", "bailout plan"],
-    answer: 1,
-  },
-  {
-    id: 17,
-    q: "The accountant warned the client that failing to pay would put him _____.",
-    choices: ["in charge", "on sale", "in default", "at risk of a chronic illness"],
-    answer: 2,
-  },
-  {
-    id: 18,
-    q: "The speaker created a highly _____ to keep the audience engaged.",
-    choices: ["interactive session", "defaulted session", "accelerated boundary", "chronic review"],
-    answer: 0,
-  },
-  {
-    id: 19,
-    q: "The team made an _____ to reduce unnecessary expenses.",
-    choices: ["embrace", "endeavor", "interactive", "bailout"],
-    answer: 1,
-  },
-  {
-    id: 20,
-    q: "After many delays, the company decided to _____ a backup plan.",
-    choices: ["set up", "bail out of", "be in default", "accelerate on"],
-    answer: 0,
-  },
+  <button id="nextBtn" onclick="nextQuestion()">Next Question</button>
+</div>
+
+<script>
+let score = 0;
+let currentIndex = -1;
+
+const questions = [
+  {q:"make a loan", a:"貸款", exp:"make a loan = 貸款"},
+  {q:"bail out (of something)", a:"放棄某事／退出", exp:"bail out = 放棄、退出、救援"},
+  {q:"facilitate (something)", a:"促進", exp:"facilitate = 使更容易、促進"},
+  {q:"accelerate (something)", a:"加速", exp:"accelerate = 加速，使更快"},
+  {q:"embrace (an opportunity)", a:"欣然接受機會", exp:"embrace an opportunity = 把握／接受機會"},
+  {q:"default on (a payment)", a:"拖欠款項", exp:"default on a payment = 拖欠付款"},
+  {q:"be in default", a:"違約", exp:"be in default = 未履行義務，違約"},
+  {q:"chronic condition", a:"慢性疾病", exp:"chronic condition = 需要長期管理的疾病"},
+  {q:"set a boundary", a:"劃定界線", exp:"set a boundary = 設定界限"},
+  {q:"interactive session", a:"互動式會議", exp:"interactive session = 含互動的研討／會議"},
+  {q:"make an endeavor", a:"努力嘗試", exp:"make an endeavor = 付出努力"},
+  {q:"loan application", a:"貸款申請", exp:"loan application = 申請貸款的文件或程序"},
+  {q:"financial default", a:"財務違約", exp:"financial default = 未支付應付款項"},
+  {q:"accelerate growth", a:"加速成長", exp:"accelerate growth = 使成長更快"},
+  {q:"facilitate discussion", a:"促進討論", exp:"facilitate discussion = 協助討論進行"},
+  {q:"embrace change", a:"接受改變", exp:"embrace change = 接受並適應變化"},
+  {q:"chronic symptoms", a:"慢性症狀", exp:"chronic symptoms = 長期持續的症狀"},
+  {q:"set personal boundaries", a:"設定個人界線", exp:"設定與他人互動的限制"},
+  {q:"interactive learning", a:"互動式學習", exp:"interactive learning = 具有互動性的學習方式"},
+  {q:"endeavor to improve", a:"努力改善", exp:"endeavor to improve = 付出努力讓事情變好"}
 ];
 
-function shuffleArray(arr) {
-  // Fisher-Yates shuffle
-  const a = arr.slice();
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+function shuffle(array){
+  for(let i=array.length-1;i>0;i--){
+    const j = Math.floor(Math.random()* (i+1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
-  return a;
 }
 
-export default function TOEICQuiz() {
-  const [questions, setQuestions] = useState(() => shuffleArray(QUESTIONS));
-  const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const [showAll, setShowAll] = useState(false);
+shuffle(questions);
 
-  useEffect(() => {
-    // when questions change, reset state
-    setIndex(0);
-    setAnswers({});
-    setSubmitted(false);
-  }, [questions]);
-
-  function handleSelect(qid, choiceIdx) {
-    setAnswers((prev) => ({ ...prev, [qid]: choiceIdx }));
+function loadQuestion(){
+  currentIndex++;
+  if(currentIndex >= questions.length){
+    document.getElementById("question").innerHTML = "Quiz Completed!";
+    document.getElementById("options").innerHTML = "";
+    document.getElementById("feedback").innerHTML = "Final Score: " + score;
+    document.getElementById("nextBtn").style.display = "none";
+    return;
   }
 
-  function handleSubmit() {
-    setSubmitted(true);
-  }
+  let q = questions[currentIndex];
 
-  function handleRestart() {
-    setQuestions(shuffleArray(QUESTIONS));
-    setShowAll(false);
-  }
+  document.getElementById("question").innerHTML = q.q;
+  document.getElementById("feedback").innerHTML = "";
+  document.getElementById("explanation").style.display = "none";
+  document.getElementById("nextBtn").style.display = "none";
 
-  function score() {
-    let s = 0;
-    for (const q of questions) {
-      if (answers[q.id] === q.answer) s++;
-    }
-    return s;
-  }
+  // 建立所有答案的隨機池（從全部題目抽）
+  let allAnswers = questions.map(x => x.a);
+  shuffle(allAnswers);
 
-  return (
-    <div className="min-h-screen bg-gray-50 p-6 flex items-start justify-center">
-      <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6">
-        <header className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-semibold">TOEIC 550 — 片語練習題 (20 題)</h1>
-          <div className="flex gap-2">
-            <button
-              className="px-3 py-1 rounded-md border" 
-              onClick={() => setQuestions(shuffleArray(questions))}
-            >
-              Shuffle Order
-            </button>
-            <button
-              className="px-3 py-1 rounded-md border"
-              onClick={() => setQuestions(shuffleArray(QUESTIONS))}
-            >
-              New Shuffle
-            </button>
-            <button
-              className="px-3 py-1 rounded-md border"
-              onClick={() => setShowAll((s) => !s)}
-            >
-              {showAll ? "Single" : "All"}
-            </button>
-          </div>
-        </header>
+  // 取三個錯誤選項 + 正確答案
+  let options = allAnswers.filter(a => a !== q.a).slice(0, 3);
+  options.push(q.a);
+  shuffle(options);
 
-        <main>
-          {!showAll ? (
-            <div>
-              <div className="mb-4">
-                <div className="text-sm text-gray-600">Question {index + 1} / {questions.length}</div>
-                <div className="mt-2 text-lg font-medium">{questions[index].q}</div>
-              </div>
-
-              <ul className="space-y-2">
-                {questions[index].choices.map((c, ci) => {
-                  const chosen = answers[questions[index].id] === ci;
-                  const isCorrect = submitted && questions[index].answer === ci;
-                  const isWrongChosen = submitted && chosen && !isCorrect;
-                  return (
-                    <li key={ci}>
-                      <button
-                        onClick={() => handleSelect(questions[index].id, ci)}
-                        className={`w-full text-left px-4 py-2 rounded-md border flex items-center justify-between ${chosen ? "bg-blue-50 border-blue-300" : "bg-white"} ${isCorrect ? "ring-2 ring-green-300" : ""} ${isWrongChosen ? "ring-2 ring-red-300" : ""}`}
-                      >
-                        <span>{String.fromCharCode(65 + ci)}. {c}</span>
-                        {isCorrect && <span className="text-sm text-green-700">Correct</span>}
-                        {isWrongChosen && <span className="text-sm text-red-700">Your answer</span>}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <div className="flex items-center gap-2 mt-4">
-                <button
-                  className="px-4 py-2 rounded-md bg-blue-600 text-white"
-                  onClick={() => setIndex((i) => Math.max(0, i - 1))}
-                  disabled={index === 0}
-                >Previous</button>
-
-                <button
-                  className="px-4 py-2 rounded-md bg-blue-600 text-white"
-                  onClick={() => setIndex((i) => Math.min(questions.length - 1, i + 1))}
-                  disabled={index === questions.length - 1}
-                >Next</button>
-
-                <div className="flex-1" />
-
-                {!submitted ? (
-                  <button
-                    className="px-4 py-2 rounded-md bg-green-600 text-white"
-                    onClick={handleSubmit}
-                  >Submit</button>
-                ) : (
-                  <div className="text-sm text-gray-700">Score: <span className="font-semibold">{score()}</span> / {questions.length}</div>
-                )}
-
-                <button className="px-3 py-1 rounded-md border" onClick={handleRestart}>Restart</button>
-              </div>
-
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {questions.map((q, qi) => (
-                <div key={q.id} className="p-4 border rounded-md">
-                  <div className="text-sm text-gray-600">Q{qi + 1}</div>
-                  <div className="font-medium mt-1">{q.q}</div>
-                  <ul className="mt-2 space-y-2">
-                    {q.choices.map((c, ci) => {
-                      const chosen = answers[q.id] === ci;
-                      const correct = q.answer === ci;
-                      return (
-                        <li key={ci}>
-                          <button
-                            onClick={() => handleSelect(q.id, ci)}
-                            className={`w-full text-left px-3 py-2 rounded-md border ${chosen ? "bg-blue-50 border-blue-300" : "bg-white"} ${submitted && correct ? "ring-2 ring-green-300" : ""}`}
-                          >
-                            <div className="flex justify-between">
-                              <div>{String.fromCharCode(65 + ci)}. {c}</div>
-                              {submitted && correct && <div className="text-sm text-green-700">Answer</div>}
-                            </div>
-                          </button>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              ))}
-
-              <div className="flex items-center gap-2">
-                {!submitted ? (
-                  <button className="px-4 py-2 rounded-md bg-green-600 text-white" onClick={handleSubmit}>Submit All</button>
-                ) : (
-                  <div className="text-sm text-gray-700">Score: <span className="font-semibold">{score()}</span> / {questions.length}</div>
-                )}
-                <button className="px-3 py-1 rounded-md border" onClick={handleRestart}>Restart</button>
-              </div>
-            </div>
-          )}
-        </main>
-
-        <footer className="mt-6 text-sm text-gray-500">
-          Tip: 點選選項以選擇答案。按 <span className="font-semibold">Shuffle Order</span> 可以將題目亂數排列。
-        </footer>
-      </div>
-    </div>
-  );
+  document.getElementById("options").innerHTML = options
+    .map(opt => `<button onclick=\"check('${opt}')\">${opt}</button>`)
+    .join("");
 }
+
+function check(answer){
+  let q = questions[currentIndex];
+
+  if(answer === q.a){
+    score += 5;
+    document.getElementById("feedback").innerHTML = "✔ Correct! +5 points";
+    document.getElementById("scoreBox").innerHTML = "Score: " + score;
+  } else {
+    document.getElementById("feedback").innerHTML = "✘ Incorrect";
+  }
+
+  document.getElementById("explanation").innerHTML = q.exp;
+  document.getElementById("explanation").style.display = "block";
+  document.getElementById("nextBtn").style.display = "block";
+
+  document.getElementById("options").innerHTML = "";
+}
+
+function nextQuestion(){ loadQuestion(); }
+
+loadQuestion();
+</script>
+</body>
+</html>
+
+
+            
+
+             
+
+
 
