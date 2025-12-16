@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>字彙測驗</title>
+    <title>文法練功房</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
@@ -10,7 +11,7 @@
 
 <nav>
     <a href="index.html">首頁</a>
-    <a href="test1.html">字彙測驗</a>
+    <a href="test1.html">文法練功房</a>
     <a href="test2.html">閱讀測驗</a>
     <a href="test3.html">文法測驗</a>
     <a href="test4.html">片語測驗</a>
@@ -18,26 +19,81 @@
 </nav>
 
 <div class="container">
-    <h1>字彙測驗</h1>
+    <h1 style="color:#62B5E5;">文法練功房（TOEIC 550 目標）</h1>
 
-    <form name="vocabForm">
-        <div class="question">
-            <p>1. “essential” 的意思是？</p>
-            <label><input type="radio" name="q1" value="A"> 不重要的</label><br>
-            <label><input type="radio" name="q1" value="B"> 必要的</label><br>
-            <label><input type="radio" name="q1" value="C"> 奇怪的</label>
-        </div>
+```
+<!-- 過去式區塊 -->
+<section class="grammar-block" style="border-left:6px solid #62B5E5;">
+    <h2>過去式 Past Tense</h2>
 
-        <div class="question">
-            <p>2. “purchase” 的意思是？</p>
-            <label><input type="radio" name="q2" value="A"> 購買</label><br>
-            <label><input type="radio" name="q2" value="B"> 修理</label><br>
-            <label><input type="radio" name="q2" value="C"> 取消</label>
-        </div>
-    </form>
+    <div class="grammar-part">
+        <h3>📌 核心概念</h3>
+        <p>過去式用來表示「已經發生並結束的事情」，多益常搭配明確的過去時間。</p>
+        <p><strong>常見時間：</strong> yesterday / last week / two days ago</p>
+        <p><strong>例句：</strong>We finished the project last week.</p>
+    </div>
 
-    <button onclick="checkAnswers(['B','A'], 'vocabForm')">提交答案</button>
-    <p id="result" class="result"></p>
+    <div class="grammar-part">
+        <h3>🎯 TOEIC 550 應試技巧</h3>
+        <ul>
+            <li>看到明確過去時間 → 直接選過去式</li>
+            <li>句中有 <strong>did</strong>，動詞一定用原形</li>
+        </ul>
+    </div>
+
+    <div class="grammar-part">
+        <h3>📝 即時測驗與回饋</h3>
+        <form name="pastForm">
+            <div class="question">
+                <p>1. The report _____ yesterday.</p>
+                <label><input type="radio" name="q1" value="A"> finish</label><br>
+                <label><input type="radio" name="q1" value="B"> finished</label><br>
+                <label><input type="radio" name="q1" value="C"> finishing</label>
+            </div>
+        </form>
+        <button onclick="checkAnswers(['B'], 'pastForm')">提交答案</button>
+        <p class="result">✔ 提示：yesterday 出現時，要用過去式。</p>
+    </div>
+</section>
+
+<!-- 關係代名詞區塊 -->
+<section class="grammar-block" style="border-left:6px solid #62B5E5;">
+    <h2>關係代名詞 Relative Pronouns</h2>
+
+    <div class="grammar-part">
+        <h3>📌 核心概念</h3>
+        <p>關係代名詞用來補充說明前面的名詞，讓句子意思更清楚。</p>
+        <ul>
+            <li><strong>who / that</strong>：人</li>
+            <li><strong>which / that</strong>：物</li>
+        </ul>
+        <p><strong>例句：</strong>The employee who joined yesterday is friendly.</p>
+    </div>
+
+    <div class="grammar-part">
+        <h3>🎯 TOEIC 550 應試技巧</h3>
+        <ul>
+            <li>先判斷先行詞是人還是物</li>
+            <li>不確定時選 <strong>that</strong> 最安全</li>
+        </ul>
+    </div>
+
+    <div class="grammar-part">
+        <h3>📝 即時測驗與回饋</h3>
+        <form name="relativeForm">
+            <div class="question">
+                <p>2. The phone _____ is on the table is mine.</p>
+                <label><input type="radio" name="q1" value="A"> who</label><br>
+                <label><input type="radio" name="q1" value="B"> which</label><br>
+                <label><input type="radio" name="q1" value="C"> where</label>
+            </div>
+        </form>
+        <button onclick="checkAnswers(['B'], 'relativeForm')">提交答案</button>
+        <p class="result">✔ 提示：phone 是「物」，要用 which 或 that。</p>
+    </div>
+</section>
+```
+
 </div>
 
 </body>
