@@ -1,41 +1,281 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>閱讀測驗</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+<meta charset="UTF-8">
+<title>Reading Practice</title>
+
+<style>
+body{
+    margin:0;
+    padding:30px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:#f2f9fd;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:45px 55px;
+    border-radius:22px;
+    box-shadow:0 12px 28px rgba(0,0,0,0.15);
+}
+
+h1{
+    text-align:center;
+    color:#62B5E5;
+    margin-bottom:35px;
+}
+
+.section-title{
+    color:#3a8fc7;
+    margin-top:50px;
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.passage{
+    background:#e9f5fb;
+    border-left:7px solid #62B5E5;
+    padding:26px;
+    line-height:2;
+    border-radius:12px;
+    margin-bottom:28px;
+    font-size:16px;
+}
+
+.question{
+    margin-bottom:35px;
+}
+
+.question p{
+    font-weight:600;
+    margin-bottom:12px;
+}
+
+.options label{
+    display:block;
+    background:#f6fbff;
+    padding:12px 18px;
+    margin:9px 0;
+    border-radius:9px;
+}
+
+.explanation{
+    display:none;
+    background:#eef7fc;
+    border-left:5px solid #62B5E5;
+    padding:15px;
+    margin-top:12px;
+    border-radius:8px;
+    line-height:1.7;
+}
+
+button{
+    display:block;
+    margin:50px auto 0;
+    padding:14px 40px;
+    font-size:17px;
+    border:none;
+    border-radius:35px;
+    background:#62B5E5;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#4aa6dd;
+}
+</style>
 </head>
+
 <body>
 
-<nav>
-    <a href="index.html">首頁</a>
-    <a href="test1.html">字彙測驗</a>
-    <a href="test2.html">閱讀測驗</a>
-    <a href="test3.html">文法測驗</a>
-    <a href="test4.html">片語測驗</a>
-    <a href="about.html">製作團隊</a>
-</nav>
-
 <div class="container">
-    <h1>閱讀測驗</h1>
+<h1>Reading Practice</h1>
 
-    <p><strong>閱讀段落：</strong><br>
-       The company will hold a meeting next Monday to discuss the new project plan.
-    </p>
-
-    <form name="readForm">
-        <div class="question">
-            <p>1. When will the meeting be held?</p>
-            <label><input type="radio" name="q1" value="A"> This Friday</label><br>
-            <label><input type="radio" name="q1" value="B"> Next Monday</label><br>
-            <label><input type="radio" name="q1" value="C"> Next Month</label>
-        </div>
-    </form>
-
-    <button onclick="checkAnswers(['B'], 'readForm')">提交答案</button>
-    <p id="result" class="result"></p>
+<h2 class="section-title">Text A: Office Announcement</h2>
+<div class="passage">
+Last Friday, the office was closed due to a system upgrade that had been planned
+for several months. Employees who worked in the IT department were in charge of
+testing the new software, which was designed to improve data security.
+As a result, all staff members were asked to complete their tasks in advance.
 </div>
+
+<div class="question">
+<p>1. Why was the office closed?</p>
+<div class="options">
+<label><input type="radio" name="q1"> Because a system upgrade took place</label>
+<label><input type="radio" name="q1"> Because employees were on vacation</label>
+<label><input type="radio" name="q1"> Because of a power failure</label>
+<label><input type="radio" name="q1"> Because new staff arrived</label>
+</div>
+<div class="explanation" id="e1">
+<strong>正確答案：</strong>Because a system upgrade took place<br>
+<strong>解析：</strong>due to 表示「因為」，說明關閉原因。
+</div>
+</div>
+
+<div class="question">
+<p>2. Who was responsible for testing the software?</p>
+<div class="options">
+<label><input type="radio" name="q2"> All employees</label>
+<label><input type="radio" name="q2"> The IT department</label>
+<label><input type="radio" name="q2"> The managers</label>
+<label><input type="radio" name="q2"> External companies</label>
+</div>
+<div class="explanation" id="e2">
+<strong>正確答案：</strong>The IT department<br>
+<strong>解析：</strong>in charge of 表示「負責」。
+</div>
+</div>
+
+<h2 class="section-title">Text B: Business Email</h2>
+<div class="passage">
+Ms. Carter, who had worked at the company for over five years, decided to transfer
+to another department last month. During her absence, Mr. Lee was assigned to take
+over her duties. Any documents that were completed during this period were reviewed
+by the team leader.
+</div>
+
+<div class="question">
+<p>3. What decision did Ms. Carter make?</p>
+<div class="options">
+<label><input type="radio" name="q3"> She changed departments</label>
+<label><input type="radio" name="q3"> She left the company</label>
+<label><input type="radio" name="q3"> She took a vacation</label>
+<label><input type="radio" name="q3"> She was promoted</label>
+</div>
+<div class="explanation" id="e3">
+<strong>正確答案：</strong>She changed departments<br>
+<strong>解析：</strong>transfer 表示「調部門」。
+</div>
+</div>
+
+<div class="question">
+<p>4. What happened to the documents?</p>
+<div class="options">
+<label><input type="radio" name="q4"> They were reviewed by the team leader</label>
+<label><input type="radio" name="q4"> They were sent to clients</label>
+<label><input type="radio" name="q4"> They were deleted</label>
+<label><input type="radio" name="q4"> They were postponed</label>
+</div>
+<div class="explanation" id="e4">
+<strong>正確答案：</strong>They were reviewed by the team leader<br>
+<strong>解析：</strong>被動語態：were reviewed。
+</div>
+</div>
+
+<h2 class="section-title">Text C: Company Policy Update</h2>
+<div class="passage">
+The training program that was introduced last year has been improved based on
+employee feedback. Workers who take part in the program are required to complete
+all assignments by the deadline. The department where the training takes place
+has reported higher performance since the changes were made.
+</div>
+
+<div class="question">
+<p>5. When was the training program introduced?</p>
+<div class="options">
+<label><input type="radio" name="q5"> Last year</label>
+<label><input type="radio" name="q5"> This month</label>
+<label><input type="radio" name="q5"> Two years ago</label>
+<label><input type="radio" name="q5"> Recently</label>
+</div>
+<div class="explanation" id="e5">
+<strong>正確答案：</strong>Last year<br>
+<strong>解析：</strong>明確過去時間，使用過去式。
+</div>
+</div>
+
+<div class="question">
+<p>6. Who must complete the assignments?</p>
+<div class="options">
+<label><input type="radio" name="q6"> Employees who join the program</label>
+<label><input type="radio" name="q6"> Managers only</label>
+<label><input type="radio" name="q6"> New staff members</label>
+<label><input type="radio" name="q6"> Trainers</label>
+</div>
+<div class="explanation" id="e6">
+<strong>正確答案：</strong>Employees who join the program<br>
+<strong>解析：</strong>who 是關係代名詞，修飾 employees。
+</div>
+</div>
+
+<div class="question">
+<p>7. What was the result of the changes?</p>
+<div class="options">
+<label><input type="radio" name="q7"> Performance improved</label>
+<label><input type="radio" name="q7"> Costs increased</label>
+<label><input type="radio" name="q7"> Staff numbers decreased</label>
+<label><input type="radio" name="q7"> Training was canceled</label>
+</div>
+<div class="explanation" id="e7">
+<strong>正確答案：</strong>Performance improved<br>
+<strong>解析：</strong>higher performance 表示成效提升。
+</div>
+</div>
+
+<h2 class="section-title">Text D: Event Information</h2>
+<div class="passage">
+A workshop on workplace communication will be held next Saturday.
+Participants who attend the event will learn practical expressions and useful
+phrases that are often used in business meetings. The session, which will last
+three hours, is expected to benefit employees who work in international teams.
+</div>
+
+<div class="question">
+<p>8. What is the workshop about?</p>
+<div class="options">
+<label><input type="radio" name="q8"> Communication at work</label>
+<label><input type="radio" name="q8"> Interview skills</label>
+<label><input type="radio" name="q8"> Resume writing</label>
+<label><input type="radio" name="q8"> Customer service</label>
+</div>
+<div class="explanation" id="e8">
+<strong>正確答案：</strong>Communication at work<br>
+<strong>解析：</strong>第一句直接點出主題。
+</div>
+</div>
+
+<div class="question">
+<p>9. How long will the session last?</p>
+<div class="options">
+<label><input type="radio" name="q9"> One hour</label>
+<label><input type="radio" name="q9"> Three hours</label>
+<label><input type="radio" name="q9"> Half a day</label>
+<label><input type="radio" name="q9"> All day</label>
+</div>
+<div class="explanation" id="e9">
+<strong>正確答案：</strong>Three hours<br>
+<strong>解析：</strong>which will last three hours 為關係子句。
+</div>
+</div>
+
+<div class="question">
+<p>10. Who will benefit most from this workshop?</p>
+<div class="options">
+<label><input type="radio" name="q10"> Employees in international teams</label>
+<label><input type="radio" name="q10"> High school students</label>
+<label><input type="radio" name="q10"> Company owners</label>
+<label><input type="radio" name="q10"> Customers</label>
+</div>
+<div class="explanation" id="e10">
+<strong>正確答案：</strong>Employees in international teams<br>
+<strong>解析：</strong>benefit employees who work in international teams。
+</div>
+</div>
+
+<button onclick="showExplanation()">Submit</button>
+</div>
+
+<script>
+function showExplanation(){
+    for(let i=1;i<=10;i++){
+        document.getElementById("e"+i).style.display="block";
+    }
+}
+</script>
 
 </body>
 </html>
