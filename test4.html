@@ -1,37 +1,310 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-    <meta charset="UTF-8">
-    <title>片語測驗</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-</head>
-<body>
+import React, { useEffect, useState } from "react";
 
-<nav>
-    <a href="index.html">首頁</a>
-    <a href="test1.html">字彙測驗</a>
-    <a href="test2.html">閱讀測驗</a>
-    <a href="test3.html">文法測驗</a>
-    <a href="test4.html">片語測驗</a>
-    <a href="about.html">製作團隊</a>
-</nav>
+// TOEIC 550-level Phrases Quiz — Single-file React component
+// TailwindCSS classes are used for styling (no imports required here).
+// Features:
+// - Loads 20 questions (from user's phrase list + extensions)
+// - Shuffles questions on load or when pressing "Shuffle"
+// - Presents one question at a time (or list view toggle)
+// - Select answers, submit, see score and correct answers
+// - Restart / reshuffle functionality
 
-<div class="container">
-    <h1>片語測驗</h1>
+const QUESTIONS = [
+  {
+    id: 1,
+    q: "The bank agreed to _____ the small startup to help with its cash flow.",
+    choices: ["make a loan to", "default on", "bail out of", "embrace"],
+    answer: 0,
+  },
+  {
+    id: 2,
+    q: "Several members decided to _____ the project because it required too much time.",
+    choices: ["accelerate", "bail out of", "facilitate", "set a boundary"],
+    answer: 1,
+  },
+  {
+    id: 3,
+    q: "The new software is designed to _____ communication between departments.",
+    choices: ["default on", "facilitate", "bail out", "be in default"],
+    answer: 1,
+  },
+  {
+    id: 4,
+    q: "The company hopes to _____ the production process with new machinery.",
+    choices: ["accelerate", "make a loan", "be in default", "set a boundary"],
+    answer: 0,
+  },
+  {
+    id: 5,
+    q: "Employees are encouraged to _____ new opportunities within the company.",
+    choices: ["embrace", "default on", "be in default", "bail out"],
+    answer: 0,
+  },
+  {
+    id: 6,
+    q: "The customer _____ the payment and was charged an additional fee.",
+    choices: ["bailed out of", "defaulted on", "accelerated", "facilitated"],
+    answer: 1,
+  },
+  {
+    id: 7,
+    q: "If the company continues to delay payments, it may _____ next month.",
+    choices: ["succeed", "offer a discount", "be in default", "open a new branch"],
+    answer: 2,
+  },
+  {
+    id: 8,
+    q: "Patients with a _____ need to schedule regular check-ups.",
+    choices: ["bail out plan", "chronic condition", "accelerated project", "boundary list"],
+    answer: 1,
+  },
+  {
+    id: 9,
+    q: "The manager had to _____ to maintain a healthy work-life balance.",
+    choices: ["set a boundary", "embrace a loan", "default on a task", "accelerate a meeting"],
+    answer: 0,
+  },
+  {
+    id: 10,
+    q: "Tomorrow’s workshop will be an _____ where participants can ask questions freely.",
+    choices: ["interactive session", "accelerated delivery", "chronic review", "default meeting"],
+    answer: 0,
+  },
+  {
+    id: 11,
+    q: "She decided to _____ and apply again next year.",
+    choices: ["accelerate the opportunity", "bail out of the plan", "default on the application", "facilitate the offer"],
+    answer: 1,
+  },
+  {
+    id: 12,
+    q: "The company made an _____ to improve employee satisfaction this year.",
+    choices: ["interactive session", "endeavor", "accelerated payment", "chronic review"],
+    answer: 1,
+  },
+  {
+    id: 13,
+    q: "Management is trying to _____ the approval process to meet the deadline.",
+    choices: ["accelerate", "bail out of", "default on", "set a boundary"],
+    answer: 0,
+  },
+  {
+    id: 14,
+    q: "The nonprofit organization plans to _____ more volunteers.",
+    choices: ["be in default", "facilitate the training of", "default on", "bail out of"],
+    answer: 1,
+  },
+  {
+    id: 15,
+    q: "When facing a major career opportunity, you should _____ it with confidence.",
+    choices: ["embrace", "default on", "accelerate", "bail out"],
+    answer: 0,
+  },
+  {
+    id: 16,
+    q: "Because of poor health, the employee has been dealing with a _____.",
+    choices: ["boundary issue", "chronic condition", "default problem", "bailout plan"],
+    answer: 1,
+  },
+  {
+    id: 17,
+    q: "The accountant warned the client that failing to pay would put him _____.",
+    choices: ["in charge", "on sale", "in default", "at risk of a chronic illness"],
+    answer: 2,
+  },
+  {
+    id: 18,
+    q: "The speaker created a highly _____ to keep the audience engaged.",
+    choices: ["interactive session", "defaulted session", "accelerated boundary", "chronic review"],
+    answer: 0,
+  },
+  {
+    id: 19,
+    q: "The team made an _____ to reduce unnecessary expenses.",
+    choices: ["embrace", "endeavor", "interactive", "bailout"],
+    answer: 1,
+  },
+  {
+    id: 20,
+    q: "After many delays, the company decided to _____ a backup plan.",
+    choices: ["set up", "bail out of", "be in default", "accelerate on"],
+    answer: 0,
+  },
+];
 
-    <form name="phraseForm">
-        <div class="question">
-            <p>1. “look forward to” 的意思是？</p>
-            <label><input type="radio" name="q1" value="A"> 期待</label><br>
-            <label><input type="radio" name="q1" value="B"> 仔細看</label><br>
-            <label><input type="radio" name="q1" value="C"> 向前走</label>
-        </div>
-    </form>
+function shuffleArray(arr) {
+  // Fisher-Yates shuffle
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
-    <button onclick="checkAnswers(['A'], 'phraseForm')">提交答案</button>
-    <p id="result" class="result"></p>
-</div>
+export default function TOEICQuiz() {
+  const [questions, setQuestions] = useState(() => shuffleArray(QUESTIONS));
+  const [index, setIndex] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
-</body>
-</html>
+  useEffect(() => {
+    // when questions change, reset state
+    setIndex(0);
+    setAnswers({});
+    setSubmitted(false);
+  }, [questions]);
+
+  function handleSelect(qid, choiceIdx) {
+    setAnswers((prev) => ({ ...prev, [qid]: choiceIdx }));
+  }
+
+  function handleSubmit() {
+    setSubmitted(true);
+  }
+
+  function handleRestart() {
+    setQuestions(shuffleArray(QUESTIONS));
+    setShowAll(false);
+  }
+
+  function score() {
+    let s = 0;
+    for (const q of questions) {
+      if (answers[q.id] === q.answer) s++;
+    }
+    return s;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-6 flex items-start justify-center">
+      <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-6">
+        <header className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-semibold">TOEIC 550 — 片語練習題 (20 題)</h1>
+          <div className="flex gap-2">
+            <button
+              className="px-3 py-1 rounded-md border" 
+              onClick={() => setQuestions(shuffleArray(questions))}
+            >
+              Shuffle Order
+            </button>
+            <button
+              className="px-3 py-1 rounded-md border"
+              onClick={() => setQuestions(shuffleArray(QUESTIONS))}
+            >
+              New Shuffle
+            </button>
+            <button
+              className="px-3 py-1 rounded-md border"
+              onClick={() => setShowAll((s) => !s)}
+            >
+              {showAll ? "Single" : "All"}
+            </button>
+          </div>
+        </header>
+
+        <main>
+          {!showAll ? (
+            <div>
+              <div className="mb-4">
+                <div className="text-sm text-gray-600">Question {index + 1} / {questions.length}</div>
+                <div className="mt-2 text-lg font-medium">{questions[index].q}</div>
+              </div>
+
+              <ul className="space-y-2">
+                {questions[index].choices.map((c, ci) => {
+                  const chosen = answers[questions[index].id] === ci;
+                  const isCorrect = submitted && questions[index].answer === ci;
+                  const isWrongChosen = submitted && chosen && !isCorrect;
+                  return (
+                    <li key={ci}>
+                      <button
+                        onClick={() => handleSelect(questions[index].id, ci)}
+                        className={`w-full text-left px-4 py-2 rounded-md border flex items-center justify-between ${chosen ? "bg-blue-50 border-blue-300" : "bg-white"} ${isCorrect ? "ring-2 ring-green-300" : ""} ${isWrongChosen ? "ring-2 ring-red-300" : ""}`}
+                      >
+                        <span>{String.fromCharCode(65 + ci)}. {c}</span>
+                        {isCorrect && <span className="text-sm text-green-700">Correct</span>}
+                        {isWrongChosen && <span className="text-sm text-red-700">Your answer</span>}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <div className="flex items-center gap-2 mt-4">
+                <button
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white"
+                  onClick={() => setIndex((i) => Math.max(0, i - 1))}
+                  disabled={index === 0}
+                >Previous</button>
+
+                <button
+                  className="px-4 py-2 rounded-md bg-blue-600 text-white"
+                  onClick={() => setIndex((i) => Math.min(questions.length - 1, i + 1))}
+                  disabled={index === questions.length - 1}
+                >Next</button>
+
+                <div className="flex-1" />
+
+                {!submitted ? (
+                  <button
+                    className="px-4 py-2 rounded-md bg-green-600 text-white"
+                    onClick={handleSubmit}
+                  >Submit</button>
+                ) : (
+                  <div className="text-sm text-gray-700">Score: <span className="font-semibold">{score()}</span> / {questions.length}</div>
+                )}
+
+                <button className="px-3 py-1 rounded-md border" onClick={handleRestart}>Restart</button>
+              </div>
+
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {questions.map((q, qi) => (
+                <div key={q.id} className="p-4 border rounded-md">
+                  <div className="text-sm text-gray-600">Q{qi + 1}</div>
+                  <div className="font-medium mt-1">{q.q}</div>
+                  <ul className="mt-2 space-y-2">
+                    {q.choices.map((c, ci) => {
+                      const chosen = answers[q.id] === ci;
+                      const correct = q.answer === ci;
+                      return (
+                        <li key={ci}>
+                          <button
+                            onClick={() => handleSelect(q.id, ci)}
+                            className={`w-full text-left px-3 py-2 rounded-md border ${chosen ? "bg-blue-50 border-blue-300" : "bg-white"} ${submitted && correct ? "ring-2 ring-green-300" : ""}`}
+                          >
+                            <div className="flex justify-between">
+                              <div>{String.fromCharCode(65 + ci)}. {c}</div>
+                              {submitted && correct && <div className="text-sm text-green-700">Answer</div>}
+                            </div>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+
+              <div className="flex items-center gap-2">
+                {!submitted ? (
+                  <button className="px-4 py-2 rounded-md bg-green-600 text-white" onClick={handleSubmit}>Submit All</button>
+                ) : (
+                  <div className="text-sm text-gray-700">Score: <span className="font-semibold">{score()}</span> / {questions.length}</div>
+                )}
+                <button className="px-3 py-1 rounded-md border" onClick={handleRestart}>Restart</button>
+              </div>
+            </div>
+          )}
+        </main>
+
+        <footer className="mt-6 text-sm text-gray-500">
+          Tip: 點選選項以選擇答案。按 <span className="font-semibold">Shuffle Order</span> 可以將題目亂數排列。
+        </footer>
+      </div>
+    </div>
+  );
+}
+
