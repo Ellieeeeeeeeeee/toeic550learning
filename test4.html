@@ -4,14 +4,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TOEIC550 Phrase Test</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f5f7fa;
       padding: 30px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
+
+    /* 導覽列樣式 */
+    nav {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      color: #62B5E5;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     .container {
       background: white;
       width: 90%;
@@ -20,15 +41,18 @@
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
+
     h2 {
       text-align: center;
       color: #333;
     }
+
     .question-box {
       margin-top: 20px;
       font-size: 1.2em;
       font-weight: bold;
     }
+
     .options button {
       width: 100%;
       margin-top: 10px;
@@ -40,14 +64,17 @@
       cursor: pointer;
       transition: 0.25s;
     }
+
     .options button:hover {
       background: #d0d9e6;
     }
+
     #feedback {
       margin-top: 15px;
       font-size: 1.1em;
       font-weight: bold;
     }
+
     #explanation {
       margin-top: 10px;
       padding: 10px;
@@ -56,11 +83,13 @@
       border-radius: 6px;
       display: none;
     }
+
     #scoreBox {
       text-align: center;
       margin-top: 20px;
       font-size: 1.2em;
     }
+
     #nextBtn {
       margin-top: 20px;
       width: 100%;
@@ -75,75 +104,71 @@
     }
   </style>
 </head>
+
 <body>
 
-<div class="container">
-
-<!-- 導覽列 -->
-<nav style="display:flex; justify-content:center; margin-top:10px; margin-bottom:20px;">
-  <a href="index.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">首頁</a>
-  <a href="test1.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">文法練功房</a>
-  <a href="test2.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">閱讀測驗</a>
-  <a href="test3.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">文法測驗</a>
-  <a href="test4.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">片語測驗</a>
-  <a href="about.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">製作團隊</a>
+<!-- 🔹 導覽列（與首頁一致） -->
+<nav>
+  <a href="index.html">首頁</a>
+  <a href="test1.html">文法練功房</a>
+  <a href="test2.html">閱讀測驗</a>
+  <a href="test3.html">文法測驗</a>
+  <a href="test4.html">片語測驗</a>
+  <a href="about.html">製作團隊</a>
 </nav>
 
-<h2>TOEIC550 Phrase Test</h2>
-<div id="scoreBox">Score: 0</div>
+<div class="container">
+  <h2>TOEIC550 Phrase Test</h2>
 
-<div class="question-box" id="question"></div>
-<div class="options" id="options"></div>
+  <div id="scoreBox">Score: 0</div>
 
-<div id="feedback"></div>
-<div id="explanation"></div>
+  <div class="question-box" id="question"></div>
+  <div class="options" id="options"></div>
 
-<button id="nextBtn" onclick="nextQuestion()">Next Question</button>
+  <div id="feedback"></div>
+  <div id="explanation"></div>
+
+  <button id="nextBtn" onclick="nextQuestion()">Next Question</button>
 </div>
 
 <script>
 let score = 0;
 let currentIndex = -1;
 
-/* ===== 50 個英文片語題庫（20 + 30）===== */
-const phrasePool = [
-  "at work","blow off steam","take a rain check","keep in touch","hit the hay",
-  "break a leg","burn the midnight oil","a piece of cake","call it a day",
-  "pull someone's leg","get out of hand","curiosity killed the cat",
-  "hang out with","put on","leave no stone unturned","take it easy",
-  "take the plunge","walk on eggshells","you're welcome","you bet",
-
-  "make someone's day","call off","hang up","hand in","point out",
-  "look after","go over","call on","take after","wait on"
+const questions = [
+  {q:"make a loan", a:"貸款", exp:"make a loan = 貸款"},
+  {q:"bail out (of something)", a:"放棄某事／退出", exp:"bail out = 放棄、退出"},
+  {q:"facilitate (something)", a:"促進", exp:"facilitate = 使事情更容易"},
+  {q:"accelerate (something)", a:"加速", exp:"accelerate = 使速度更快"},
+  {q:"embrace (an opportunity)", a:"欣然接受機會", exp:"embrace an opportunity = 把握機會"},
+  {q:"default on (a payment)", a:"拖欠款項", exp:"default on a payment = 拖欠付款"},
+  {q:"be in default", a:"違約", exp:"be in default = 未履行義務"},
+  {q:"chronic condition", a:"慢性疾病", exp:"chronic condition = 長期疾病"},
+  {q:"set a boundary", a:"劃定界線", exp:"set a boundary = 設定界限"},
+  {q:"interactive session", a:"互動式會議", exp:"interactive session = 有互動的會議"},
+  {q:"make an endeavor", a:"努力嘗試", exp:"make an endeavor = 付出努力"},
+  {q:"loan application", a:"貸款申請", exp:"loan application = 申請貸款"},
+  {q:"financial default", a:"財務違約", exp:"financial default = 財務未履行"},
+  {q:"accelerate growth", a:"加速成長", exp:"accelerate growth = 使成長更快"},
+  {q:"facilitate discussion", a:"促進討論", exp:"facilitate discussion = 協助討論"},
+  {q:"embrace change", a:"接受改變", exp:"embrace change = 接受並適應變化"},
+  {q:"chronic symptoms", a:"慢性症狀", exp:"chronic symptoms = 長期症狀"},
+  {q:"set personal boundaries", a:"設定個人界線", exp:"人際互動的界線"},
+  {q:"interactive learning", a:"互動式學習", exp:"interactive learning = 有互動的學習"},
+  {q:"endeavor to improve", a:"努力改善", exp:"endeavor to improve = 付出努力改善"}
 ];
 
-/* ===== 題目（英文句子填空）===== */
-const questions = [
-  {
-    sentence: "I'm really tired. I think I'll _____ and go to sleep.",
-    answer: "hit the hay",
-    exp: "hit the hay = go to bed"
-  },
-  {
-    sentence: "After the exam, we went out to _____ and relax.",
-    answer: "blow off steam",
-    exp: "blow off steam = release stress"
-  },
-  {
-    sentence: "This task is so easy. It's _____!",
-    answer: "a piece of cake",
-    exp: "a piece of cake = very easy"
-  },
-  {
-    sentence: "The teacher asked me to _____ my homework by Friday.",
-    answer: "hand in",
-    exp: "hand in = submit"
-  },
-  {
-    sentence: "Let's _____ after work and grab dinner.",
-    answer: "hang out with",
-    exp: "hang out with = spend time together"
-  }
+const optionPool = [
+  "貸款","放棄某事／退出","促進","加速","欣然接受機會",
+  "拖欠款項","違約","慢性疾病","劃定界線","互動式會議",
+  "努力嘗試","貸款申請","財務違約","加速成長","促進討論",
+  "接受改變","慢性症狀","設定個人界線","互動式學習","努力改善",
+  "上班中","釋放壓力","下次再約／改天再說","再聯絡","睡覺",
+  "祝好運","開夜車","輕鬆、容易","收工","開某人玩笑",
+  "失控","因好奇而惹禍上身","跟某人出去玩","穿上","竭盡全力",
+  "放輕鬆","不遺餘力","小心翼翼","不客氣","當然",
+  "使某人高興","取消","掛電話、懸掛","繳交","引起注意",
+  "照顧","仔細看","要求做某事","相似","服務"
 ];
 
 function shuffle(array){
@@ -153,12 +178,11 @@ function shuffle(array){
   }
 }
 
-shuffle(questions);
-
 function loadQuestion(){
   currentIndex++;
+
   if(currentIndex >= questions.length){
-    document.getElementById("question").innerHTML = "Quiz Completed!";
+    document.getElementById("question").innerHTML = "🎉 Quiz Completed!";
     document.getElementById("options").innerHTML = "";
     document.getElementById("feedback").innerHTML = "Final Score: " + score;
     document.getElementById("nextBtn").style.display = "none";
@@ -166,26 +190,26 @@ function loadQuestion(){
   }
 
   let q = questions[currentIndex];
-  document.getElementById("question").innerHTML = q.sentence.replace("_____", "______");
+  document.getElementById("question").innerHTML = q.q;
   document.getElementById("feedback").innerHTML = "";
   document.getElementById("explanation").style.display = "none";
   document.getElementById("nextBtn").style.display = "none";
 
-  let wrongOptions = phrasePool.filter(p => p !== q.answer);
+  let wrongOptions = optionPool.filter(a => a !== q.a);
   shuffle(wrongOptions);
 
-  let options = wrongOptions.slice(0,3);
-  options.push(q.answer);
+  let options = wrongOptions.slice(0, 3);
+  options.push(q.a);
   shuffle(options);
 
-  document.getElementById("options").innerHTML = options
-    .map(opt => `<button onclick="check('${opt}')">${opt}</button>`)
-    .join("");
+  document.getElementById("options").innerHTML =
+    options.map(opt => `<button onclick="check('${opt}')">${opt}</button>`).join("");
 }
 
 function check(answer){
   let q = questions[currentIndex];
-  if(answer === q.answer){
+
+  if(answer === q.a){
     score += 5;
     document.getElementById("feedback").innerHTML = "✔ Correct! +5 points";
     document.getElementById("scoreBox").innerHTML = "Score: " + score;
@@ -199,16 +223,11 @@ function check(answer){
   document.getElementById("options").innerHTML = "";
 }
 
-function nextQuestion(){ loadQuestion(); }
+function nextQuestion(){
+  loadQuestion();
+}
 
 loadQuestion();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
