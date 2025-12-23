@@ -1,22 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"> 
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
     <title>文法測驗｜關係代名詞與過去式</title>
 
-  <!-- 導覽列 -->
-
-<nav style="display:flex; justify-content:center; margin-top:20px;">
-    <div style="background:#62B5E5; padding:12px 28px; border-radius:999px;">
-        <a href="index.html" style="color:#ffffff; margin:0 12px; text-decoration:none; font-weight:bold;">首頁</a>
-        <a href="test1.html" style="color:#ffffff; margin:0 12px; text-decoration:none; font-weight:bold;">文法練功房</a>
-        <a href="test2.html" style="color:#ffffff; margin:0 12px; text-decoration:none; font-weight:bold;">閱讀測驗</a>
-        <a href="test3.html" style="color:#ffffff; margin:0 12px; text-decoration:none; font-weight:bold;">文法測驗</a>
-        <a href="test4.html" style="color:#ffffff; margin:0 12px; text-decoration:none; font-weight:bold;">片語測驗</a>
-        <a href="about.html" style="color:#ffffff; margin:0 12px; text-decoration:none; font-weight:bold;">製作團隊</a>
-    </div>
-</nav>
-  
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
@@ -28,22 +15,25 @@
         h1 {
             text-align: center;
             color: #62B5E5;
+            margin-top: 20px;
         }
 
         .question {
             border: 2px solid #62B5E5;
             border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 700px;
+            text-align: left; /* ← 題目與答案靠左 */
         }
 
-        .question p {
-            font-weight: bold;
+        .options {
+            margin-top: 10px;
         }
 
         .options label {
             display: block;
-            margin: 5px 0;
+            margin: 6px 0;
             cursor: pointer;
         }
 
@@ -59,22 +49,17 @@
             cursor: pointer;
         }
 
-        button:hover {
-            opacity: 0.85;
-        }
-
         .result {
             text-align: center;
             font-size: 18px;
-            color: #333;
             margin-top: 20px;
         }
 
         .explanation {
-            margin-top: 10px;
+            margin-top: 12px;
             padding: 10px;
             background-color: #f0f8fc;
-            border-radius: 5px;
+            border-radius: 6px;
             display: none;
         }
 
@@ -86,13 +71,23 @@
 </head>
 <body>
 
+<!-- 導覽列 -->
+<nav style="display:flex; justify-content:center; margin-top:20px;">
+    <a href="index.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">首頁</a>
+    <a href="test1.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">文法練功房</a>
+    <a href="test2.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">閱讀測驗</a>
+    <a href="test3.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">文法測驗</a>
+    <a href="test4.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">片語測驗</a>
+    <a href="about.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">製作團隊</a>
+</nav>
+
 <h1>文法測驗：關係代名詞子句 & 過去式</h1>
 
 <div id="quiz"></div>
 
 <button onclick="submitQuiz()">送出作答</button>
 
-<div class="result" id="result"></div>
+<div id="result" class="result"></div>
 
 <script>
 const questions = [
@@ -100,183 +95,61 @@ const questions = [
         q: "1. The man _____ helped me yesterday was very kind.",
         options: ["which", "who", "when", "where"],
         answer: 1,
-        exp: "who 用來指人，作為關係代名詞主詞。"
+        exp: "先行詞是人，關係代名詞作主詞，用 who。"
     },
     {
         q: "2. I remember the day _____ we met.",
-        options: ["who", "which", "when", "what"],
-        answer: 2,
-        exp: "when 指時間，用來修飾 the day。"
+        options: ["which", "when", "where", "who"],
+        answer: 1,
+        exp: "day 是時間名詞，使用 when。"
     },
     {
         q: "3. This is the book _____ I bought last week.",
-        options: ["who", "when", "which", "where"],
-        answer: 2,
-        exp: "which 用來指物，作為受詞。"
-    },
-    {
-        q: "4. She visited the house _____ she grew up.",
-        options: ["which", "where", "who", "what"],
+        options: ["who", "which", "where", "when"],
         answer: 1,
-        exp: "where 表示地點。"
+        exp: "book 是物，關係代名詞作受詞，用 which。"
     },
     {
-        q: "5. He was the student _____ won the prize.",
-        options: ["which", "who", "when", "where"],
-        answer: 1,
-        exp: "先行詞是人，用 who。"
-    },
-    {
-        q: "6. I watched a movie _____ made me cry.",
-        options: ["who", "when", "which", "where"],
-        answer: 2,
-        exp: "which 用來指物（movie）。"
-    },
-    {
-        q: "7. She talked about the time _____ she lived in Paris.",
-        options: ["which", "when", "where", "who"],
-        answer: 1,
-        exp: "the time 是時間名詞，搭配 when。"
-    },
-    {
-        q: "8. The restaurant _____ we had dinner was famous.",
-        options: ["which", "who", "where", "when"],
-        answer: 2,
-        exp: "where 表示地點。"
-    },
-    {
-        q: "9. I met a girl _____ brother is a doctor.",
+        q: "4. I met a girl _____ brother is a doctor.",
         options: ["who", "whose", "which", "where"],
         answer: 1,
-        exp: "whose 表示所屬關係。"
+        exp: "whose 表示所屬關係（她的哥哥）。"
     },
     {
-        q: "10. That is the teacher _____ class I enjoy.",
-        options: ["who", "whose", "which", "when"],
-        answer: 1,
-        exp: "whose 表示『老師的課』。"
-    },
-
-    {
-        q: "11. I _____ to school by bus yesterday.",
-        options: ["go", "went", "goes", "going"],
-        answer: 1,
-        exp: "yesterday 表示過去時間，用 went。"
+        q: "5. The restaurant _____ we had dinner was famous.",
+        options: ["which", "who", "where", "when"],
+        answer: 2,
+        exp: "restaurant 是地點，使用 where。"
     },
     {
-        q: "12. She _____ a letter last night.",
-        options: ["writes", "wrote", "write", "written"],
-        answer: 1,
-        exp: "write 的過去式是 wrote。"
-    },
-    {
-        q: "13. We _____ the movie last weekend.",
+        q: "6. We _____ the movie last weekend.",
         options: ["watch", "watched", "watches", "watching"],
         answer: 1,
-        exp: "看電影慣用 watch，過去式為 watched。"
+        exp: "watch a movie 為慣用語，過去式為 watched。"
     },
     {
-        q: "14. He _____ late for class this morning.",
+        q: "7. She _____ a letter last night.",
+        options: ["write", "writes", "wrote", "written"],
+        answer: 2,
+        exp: "write 的過去式是不規則變化 wrote。"
+    },
+    {
+        q: "8. He _____ late for class this morning.",
         options: ["is", "was", "were", "be"],
         answer: 1,
         exp: "主詞是 he，過去式用 was。"
     },
     {
-        q: "15. They _____ dinner at home yesterday.",
-        options: ["have", "had", "has", "having"],
+        q: "9. The movie _____ we watched was interesting.",
+        options: ["who", "which", "where", "when"],
         answer: 1,
-        exp: "have 的過去式是 had。"
+        exp: "movie 是物，關係代名詞用 which。"
     },
     {
-        q: "16. She _____ very tired after work.",
-        options: ["is", "was", "were", "are"],
-        answer: 1,
-        exp: "描述過去狀態，用 was。"
-    },
-    {
-        q: "17. I _____ my keys on the table.",
-        options: ["leave", "left", "leaves", "leaving"],
-        answer: 1,
-        exp: "leave 的過去式是 left。"
-    },
-    {
-        q: "18. We _____ a great time yesterday.",
+        q: "10. They _____ dinner at home yesterday.",
         options: ["have", "has", "had", "having"],
         answer: 2,
-        exp: "過去時間，使用 had。"
-    },
-    {
-        q: "19. He _____ his homework last night.",
-        options: ["finish", "finished", "finishes", "finishing"],
-        answer: 1,
-        exp: "規則動詞過去式加 -ed。"
-    },
-    {
-        q: "20. She _____ me an email yesterday.",
-        options: ["send", "sent", "sends", "sending"],
-        answer: 1,
-        exp: "send 的過去式是 sent。"
-    },
-
-    {
-        q: "21. The boy _____ helped me _____ very kind.",
-        options: ["who / is", "who / was", "which / was", "where / is"],
-        answer: 1,
-        exp: "關係代名詞 who + 過去式 was。"
-    },
-    {
-        q: "22. I visited the city _____ I was born.",
-        options: ["which", "when", "where", "who"],
-        answer: 2,
-        exp: "出生地點，用 where。"
-    },
-    {
-        q: "23. This is the movie _____ we watched last night.",
-        options: ["who", "which", "where", "when"],
-        answer: 1,
-        exp: "movie 是物，用 which。"
-    },
-    {
-        q: "24. She was the one _____ called me yesterday.",
-        options: ["which", "who", "where", "when"],
-        answer: 1,
-        exp: "人作主詞，用 who。"
-    },
-    {
-        q: "25. I remember the day _____ we met.",
-        options: ["which", "when", "where", "who"],
-        answer: 1,
-        exp: "時間名詞 day，用 when。"
-    },
-    {
-        q: "26. He _____ very happy when he heard the news.",
-        options: ["is", "was", "were", "be"],
-        answer: 1,
-        exp: "過去狀態，用 was。"
-    },
-    {
-        q: "27. The book _____ I borrowed was interesting.",
-        options: ["who", "which", "where", "when"],
-        answer: 1,
-        exp: "book 是物，用 which。"
-    },
-    {
-        q: "28. She _____ shopping yesterday afternoon.",
-        options: ["go", "went", "goes", "gone"],
-        answer: 1,
-        exp: "go 的過去式是 went。"
-    },
-    {
-        q: "29. That is the place _____ we met.",
-        options: ["who", "when", "where", "which"],
-        answer: 2,
-        exp: "地點名詞，用 where。"
-    },
-    {
-        q: "30. He _____ a lot of money last year.",
-        options: ["make", "made", "makes", "making"],
-        answer: 1,
-        exp: "make 的過去式是 made。"
+        exp: "have 的過去式是 had。"
     }
 ];
 
@@ -285,7 +158,7 @@ const quizDiv = document.getElementById("quiz");
 questions.forEach((item, index) => {
     const qDiv = document.createElement("div");
     qDiv.className = "question";
-    qDiv.innerHTML = `<p>${item.q}</p>`;
+    qDiv.innerHTML = `<p><strong>${item.q}</strong></p>`;
 
     const optDiv = document.createElement("div");
     optDiv.className = "options";
@@ -324,7 +197,7 @@ function submitQuiz() {
 
         if (selected === item.answer) {
             correct++;
-            expDiv.innerHTML = `<span class="correct">✔ 正確！</span><br>
+            expDiv.innerHTML = `<span class="correct">✔ 正確</span><br>
             正確答案：${item.options[item.answer]}<br>
             解析：${item.exp}`;
         } else {
@@ -341,7 +214,3 @@ function submitQuiz() {
 
 </body>
 </html>
-
-
-
-
