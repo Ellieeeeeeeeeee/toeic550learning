@@ -3,15 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TOEIC 550 Quiz</title>
+  <title>TOEIC550 Phrase Test</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #f5f7fa;
       padding: 30px;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
     }
+
+    /* 導覽列樣式 */
+    nav {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      color: #62B5E5;
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
     .container {
       background: white;
       width: 90%;
@@ -20,15 +41,18 @@
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
+
     h2 {
       text-align: center;
       color: #333;
     }
+
     .question-box {
       margin-top: 20px;
       font-size: 1.2em;
       font-weight: bold;
     }
+
     .options button {
       width: 100%;
       margin-top: 10px;
@@ -40,14 +64,17 @@
       cursor: pointer;
       transition: 0.25s;
     }
+
     .options button:hover {
       background: #d0d9e6;
     }
+
     #feedback {
       margin-top: 15px;
       font-size: 1.1em;
       font-weight: bold;
     }
+
     #explanation {
       margin-top: 10px;
       padding: 10px;
@@ -56,11 +83,13 @@
       border-radius: 6px;
       display: none;
     }
+
     #scoreBox {
       text-align: center;
       margin-top: 20px;
       font-size: 1.2em;
     }
+
     #nextBtn {
       margin-top: 20px;
       width: 100%;
@@ -75,14 +104,27 @@
     }
   </style>
 </head>
+
 <body>
+
+<!-- 🔹 導覽列（與首頁一致） -->
+<nav>
+  <a href="index.html">首頁</a>
+  <a href="test1.html">文法練功房</a>
+  <a href="test2.html">閱讀測驗</a>
+  <a href="test3.html">文法測驗</a>
+  <a href="test4.html">片語測驗</a>
+  <a href="about.html">製作團隊</a>
+</nav>
+
 <div class="container">
-  <h2>TOEIC 550 Vocabulary Quiz</h2>
+  <h2>TOEIC550 Phrase Test</h2>
+
   <div id="scoreBox">Score: 0</div>
 
   <div class="question-box" id="question"></div>
   <div class="options" id="options"></div>
-  
+
   <div id="feedback"></div>
   <div id="explanation"></div>
 
@@ -95,40 +137,52 @@ let currentIndex = -1;
 
 const questions = [
   {q:"make a loan", a:"貸款", exp:"make a loan = 貸款"},
-  {q:"bail out (of something)", a:"放棄某事／退出", exp:"bail out = 放棄、退出、救援"},
-  {q:"facilitate (something)", a:"促進", exp:"facilitate = 使更容易、促進"},
-  {q:"accelerate (something)", a:"加速", exp:"accelerate = 加速，使更快"},
-  {q:"embrace (an opportunity)", a:"欣然接受機會", exp:"embrace an opportunity = 把握／接受機會"},
+  {q:"bail out (of something)", a:"放棄某事／退出", exp:"bail out = 放棄、退出"},
+  {q:"facilitate (something)", a:"促進", exp:"facilitate = 使事情更容易"},
+  {q:"accelerate (something)", a:"加速", exp:"accelerate = 使速度更快"},
+  {q:"embrace (an opportunity)", a:"欣然接受機會", exp:"embrace an opportunity = 把握機會"},
   {q:"default on (a payment)", a:"拖欠款項", exp:"default on a payment = 拖欠付款"},
-  {q:"be in default", a:"違約", exp:"be in default = 未履行義務，違約"},
-  {q:"chronic condition", a:"慢性疾病", exp:"chronic condition = 需要長期管理的疾病"},
+  {q:"be in default", a:"違約", exp:"be in default = 未履行義務"},
+  {q:"chronic condition", a:"慢性疾病", exp:"chronic condition = 長期疾病"},
   {q:"set a boundary", a:"劃定界線", exp:"set a boundary = 設定界限"},
-  {q:"interactive session", a:"互動式會議", exp:"interactive session = 含互動的研討／會議"},
+  {q:"interactive session", a:"互動式會議", exp:"interactive session = 有互動的會議"},
   {q:"make an endeavor", a:"努力嘗試", exp:"make an endeavor = 付出努力"},
-  {q:"loan application", a:"貸款申請", exp:"loan application = 申請貸款的文件或程序"},
-  {q:"financial default", a:"財務違約", exp:"financial default = 未支付應付款項"},
+  {q:"loan application", a:"貸款申請", exp:"loan application = 申請貸款"},
+  {q:"financial default", a:"財務違約", exp:"financial default = 財務未履行"},
   {q:"accelerate growth", a:"加速成長", exp:"accelerate growth = 使成長更快"},
-  {q:"facilitate discussion", a:"促進討論", exp:"facilitate discussion = 協助討論進行"},
+  {q:"facilitate discussion", a:"促進討論", exp:"facilitate discussion = 協助討論"},
   {q:"embrace change", a:"接受改變", exp:"embrace change = 接受並適應變化"},
-  {q:"chronic symptoms", a:"慢性症狀", exp:"chronic symptoms = 長期持續的症狀"},
-  {q:"set personal boundaries", a:"設定個人界線", exp:"設定與他人互動的限制"},
-  {q:"interactive learning", a:"互動式學習", exp:"interactive learning = 具有互動性的學習方式"},
-  {q:"endeavor to improve", a:"努力改善", exp:"endeavor to improve = 付出努力讓事情變好"}
+  {q:"chronic symptoms", a:"慢性症狀", exp:"chronic symptoms = 長期症狀"},
+  {q:"set personal boundaries", a:"設定個人界線", exp:"人際互動的界線"},
+  {q:"interactive learning", a:"互動式學習", exp:"interactive learning = 有互動的學習"},
+  {q:"endeavor to improve", a:"努力改善", exp:"endeavor to improve = 付出努力改善"}
+];
+
+const optionPool = [
+  "貸款","放棄某事／退出","促進","加速","欣然接受機會",
+  "拖欠款項","違約","慢性疾病","劃定界線","互動式會議",
+  "努力嘗試","貸款申請","財務違約","加速成長","促進討論",
+  "接受改變","慢性症狀","設定個人界線","互動式學習","努力改善",
+  "上班中","釋放壓力","下次再約／改天再說","再聯絡","睡覺",
+  "祝好運","開夜車","輕鬆、容易","收工","開某人玩笑",
+  "失控","因好奇而惹禍上身","跟某人出去玩","穿上","竭盡全力",
+  "放輕鬆","不遺餘力","小心翼翼","不客氣","當然",
+  "使某人高興","取消","掛電話、懸掛","繳交","引起注意",
+  "照顧","仔細看","要求做某事","相似","服務"
 ];
 
 function shuffle(array){
   for(let i=array.length-1;i>0;i--){
-    const j = Math.floor(Math.random()* (i+1));
+    const j = Math.floor(Math.random()*(i+1));
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
-shuffle(questions);
-
 function loadQuestion(){
   currentIndex++;
+
   if(currentIndex >= questions.length){
-    document.getElementById("question").innerHTML = "Quiz Completed!";
+    document.getElementById("question").innerHTML = "🎉 Quiz Completed!";
     document.getElementById("options").innerHTML = "";
     document.getElementById("feedback").innerHTML = "Final Score: " + score;
     document.getElementById("nextBtn").style.display = "none";
@@ -136,24 +190,20 @@ function loadQuestion(){
   }
 
   let q = questions[currentIndex];
-
   document.getElementById("question").innerHTML = q.q;
   document.getElementById("feedback").innerHTML = "";
   document.getElementById("explanation").style.display = "none";
   document.getElementById("nextBtn").style.display = "none";
 
-  // 建立所有答案的隨機池（從全部題目抽）
-  let allAnswers = questions.map(x => x.a);
-  shuffle(allAnswers);
+  let wrongOptions = optionPool.filter(a => a !== q.a);
+  shuffle(wrongOptions);
 
-  // 取三個錯誤選項 + 正確答案
-  let options = allAnswers.filter(a => a !== q.a).slice(0, 3);
+  let options = wrongOptions.slice(0, 3);
   options.push(q.a);
   shuffle(options);
 
-  document.getElementById("options").innerHTML = options
-    .map(opt => `<button onclick=\"check('${opt}')\">${opt}</button>`)
-    .join("");
+  document.getElementById("options").innerHTML =
+    options.map(opt => `<button onclick="check('${opt}')">${opt}</button>`).join("");
 }
 
 function check(answer){
@@ -170,21 +220,17 @@ function check(answer){
   document.getElementById("explanation").innerHTML = q.exp;
   document.getElementById("explanation").style.display = "block";
   document.getElementById("nextBtn").style.display = "block";
-
   document.getElementById("options").innerHTML = "";
 }
 
-function nextQuestion(){ loadQuestion(); }
+function nextQuestion(){
+  loadQuestion();
+}
 
 loadQuestion();
 </script>
 </body>
 </html>
-
-
-            
-
-             
 
 
 
