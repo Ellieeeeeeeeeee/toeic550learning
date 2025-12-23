@@ -1,75 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>文法測驗｜關係代名詞與過去式</title>
-
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #ffffff;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #62B5E5;
-            margin-top: 20px;
-        }
-
-        .question {
-            border: 2px solid #62B5E5;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px auto;
-            max-width: 700px;
-            text-align: left; /* ← 題目與答案靠左 */
-        }
-
-        .options {
-            margin-top: 10px;
-        }
-
-        .options label {
-            display: block;
-            margin: 6px 0;
-            cursor: pointer;
-        }
-
-        button {
-            display: block;
-            margin: 30px auto;
-            padding: 10px 30px;
-            background-color: #62B5E5;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .result {
-            text-align: center;
-            font-size: 18px;
-            margin-top: 20px;
-        }
-
-        .explanation {
-            margin-top: 12px;
-            padding: 10px;
-            background-color: #f0f8fc;
-            border-radius: 6px;
-            display: none;
-        }
-
-        .correct {
-            color: green;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
+<meta charset="UTF-8">
+<title>Reading Practice</title>
 
 <!-- 導覽列 -->
 <nav style="display:flex; justify-content:center; margin-top:20px;">
@@ -80,135 +13,318 @@
     <a href="test4.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">片語測驗</a>
     <a href="about.html" style="color:#62B5E5; margin:0 12px; text-decoration:none; font-weight:bold;">製作團隊</a>
 </nav>
+    
+<style>
+body{
+    margin:0;
+    padding:30px;
+    font-family:"Segoe UI", Arial, sans-serif;
+    background:#f2f9fd;
+}
 
-<h1>文法測驗：關係代名詞子句 & 過去式</h1>
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    padding:45px 55px;
+    border-radius:22px;
+    box-shadow:0 12px 28px rgba(0,0,0,0.15);
+}
 
-<div id="quiz"></div>
+h1{
+    text-align:center;
+    color:#62B5E5;
+    margin-bottom:40px;
+}
 
-<button onclick="submitQuiz()">送出作答</button>
+.section-title{
+    color:#3a8fc7;
+    margin-top:55px;
+    font-size:22px;
+}
 
-<div id="result" class="result"></div>
+.passage{
+    background:#e9f5fb;
+    border-left:7px solid #62B5E5;
+    padding:26px;
+    line-height:2;
+    border-radius:12px;
+    margin-bottom:30px;
+}
+
+.question{
+    margin-bottom:35px;
+}
+
+.options label{
+    display:block;
+    background:#f6fbff;
+    padding:10px 16px;
+    margin:8px 0;
+    border-radius:8px;
+}
+
+.feedback{
+    margin-top:10px;
+    font-weight:bold;
+}
+
+.correct{ color:green; }
+.wrong{ color:red; }
+
+.explanation{
+    display:none;
+    background:#eef7fc;
+    border-left:5px solid #62B5E5;
+    padding:15px;
+    margin-top:10px;
+    border-radius:8px;
+    line-height:1.7;
+}
+
+button{
+    display:block;
+    margin:50px auto 0;
+    padding:14px 40px;
+    font-size:17px;
+    border:none;
+    border-radius:35px;
+    background:#62B5E5;
+    color:white;
+    cursor:pointer;
+}
+
+button:disabled{
+    background:#9fcde8;
+    cursor:not-allowed;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<h1>Reading Practice</h1>
+
+<!-- ===== Text A ===== -->
+<h2 class="section-title">Office System Upgrade</h2>
+<div class="passage">
+Last Friday, the office was closed due to a system upgrade that had been planned for several months.
+Employees who worked in the IT department were in charge of testing the new software, which was
+designed to improve data security. As a result, all staff members were asked to complete their
+tasks in advance. The upgrade was finished earlier than expected, and normal operations resumed
+the following Monday.
+</div>
+
+<div class="question" data-answer="0">
+<p>1. Why was the office closed?</p>
+<div class="options">
+<label><input type="radio" name="q1"> Because a system upgrade took place</label>
+<label><input type="radio" name="q1"> Because employees were on vacation</label>
+<label><input type="radio" name="q1"> Because of a power failure</label>
+<label><input type="radio" name="q1"> Because new staff arrived</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Because a system upgrade took place<br>
+<strong>解析：</strong>due to 表示「因為」，後面接名詞，說明辦公室關閉的原因。
+</div>
+</div>
+
+<div class="question" data-answer="1">
+<p>2. Who tested the new software?</p>
+<div class="options">
+<label><input type="radio" name="q2"> All employees</label>
+<label><input type="radio" name="q2"> The IT department</label>
+<label><input type="radio" name="q2"> Managers</label>
+<label><input type="radio" name="q2"> External companies</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>The IT department<br>
+<strong>解析：</strong>be in charge of 表示「負責」，主詞是 IT department。
+</div>
+</div>
+
+<!-- ===== Text B ===== -->
+<h2 class="section-title">Department Transfer</h2>
+<div class="passage">
+Ms. Carter, who had worked at the company for over five years, decided to transfer
+to another department last month. During her absence, Mr. Lee took over her duties.
+Any documents that were completed during this period were reviewed by the team leader,
+who ensured that all procedures were followed correctly.
+</div>
+
+<div class="question" data-answer="0">
+<p>3. What decision did Ms. Carter make?</p>
+<div class="options">
+<label><input type="radio" name="q3"> She changed departments</label>
+<label><input type="radio" name="q3"> She left the company</label>
+<label><input type="radio" name="q3"> She took a vacation</label>
+<label><input type="radio" name="q3"> She was promoted</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>She changed departments<br>
+<strong>解析：</strong>transfer to another department 表示「調到其他部門」。
+</div>
+</div>
+
+<div class="question" data-answer="0">
+<p>4. What happened to the documents?</p>
+<div class="options">
+<label><input type="radio" name="q4"> They were reviewed by the team leader</label>
+<label><input type="radio" name="q4"> They were sent to clients</label>
+<label><input type="radio" name="q4"> They were deleted</label>
+<label><input type="radio" name="q4"> They were postponed</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>They were reviewed by the team leader<br>
+<strong>解析：</strong>were reviewed 是被動語態，表示文件「被審核」。
+</div>
+</div>
+
+<!-- ===== Text C ===== -->
+<h2 class="section-title">Training Program Update</h2>
+<div class="passage">
+The training program that was introduced last year has been improved based on
+employee feedback. Workers who take part in the program are required to complete
+all assignments by the deadline. Since the changes were made, the department where
+the training takes place has reported higher performance.
+</div>
+
+<div class="question" data-answer="0">
+<p>5. When was the training program introduced?</p>
+<div class="options">
+<label><input type="radio" name="q5"> Last year</label>
+<label><input type="radio" name="q5"> This month</label>
+<label><input type="radio" name="q5"> Recently</label>
+<label><input type="radio" name="q5"> Next year</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Last year<br>
+<strong>解析：</strong>明確過去時間，搭配 was introduced。
+</div>
+</div>
+
+<div class="question" data-answer="0">
+<p>6. Who must complete all assignments?</p>
+<div class="options">
+<label><input type="radio" name="q6"> Employees who join the program</label>
+<label><input type="radio" name="q6"> Managers</label>
+<label><input type="radio" name="q6"> Trainers</label>
+<label><input type="radio" name="q6"> Customers</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Employees who join the program<br>
+<strong>解析：</strong>who 是關係代名詞，用來修飾 employees。
+</div>
+</div>
+
+<div class="question" data-answer="0">
+<p>7. What was the result after the changes?</p>
+<div class="options">
+<label><input type="radio" name="q7"> Performance improved</label>
+<label><input type="radio" name="q7"> Costs increased</label>
+<label><input type="radio" name="q7"> Training ended</label>
+<label><input type="radio" name="q7"> Staff decreased</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Performance improved<br>
+<strong>解析：</strong>has reported higher performance 表示績效提升。
+</div>
+</div>
+
+<!-- ===== Text D ===== -->
+<h2 class="section-title">Communication Workshop</h2>
+<div class="passage">
+A workshop on workplace communication will be held next Saturday.
+Participants who attend the event will learn practical expressions and useful
+phrases that are often used in business meetings. The session, which will last
+three hours, is expected to benefit employees who work in international teams.
+</div>
+
+<div class="question" data-answer="0">
+<p>8. What is the workshop mainly about?</p>
+<div class="options">
+<label><input type="radio" name="q8"> Communication at work</label>
+<label><input type="radio" name="q8"> Job interviews</label>
+<label><input type="radio" name="q8"> Resume writing</label>
+<label><input type="radio" name="q8"> Customer complaints</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Communication at work<br>
+<strong>解析：</strong>第一句直接說明 workshop 主題。
+</div>
+</div>
+
+<div class="question" data-answer="1">
+<p>9. How long will the session last?</p>
+<div class="options">
+<label><input type="radio" name="q9"> One hour</label>
+<label><input type="radio" name="q9"> Three hours</label>
+<label><input type="radio" name="q9"> Half a day</label>
+<label><input type="radio" name="q9"> All day</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Three hours<br>
+<strong>解析：</strong>which will last three hours 是關係子句。
+</div>
+</div>
+
+<div class="question" data-answer="0">
+<p>10. Who will benefit most from the workshop?</p>
+<div class="options">
+<label><input type="radio" name="q10"> Employees in international teams</label>
+<label><input type="radio" name="q10"> Students</label>
+<label><input type="radio" name="q10"> Company owners</label>
+<label><input type="radio" name="q10"> Customers</label>
+</div>
+<div class="feedback"></div>
+<div class="explanation">
+<strong>正確答案：</strong>Employees in international teams<br>
+<strong>解析：</strong>文章最後一句直接點出受益對象。
+</div>
+</div>
+
+<button id="submitBtn" onclick="checkAnswers()">Submit</button>
+
+</div>
 
 <script>
-const questions = [
-    {
-        q: "1. The man _____ helped me yesterday was very kind.",
-        options: ["which", "who", "when", "where"],
-        answer: 1,
-        exp: "先行詞是人，關係代名詞作主詞，用 who。"
-    },
-    {
-        q: "2. I remember the day _____ we met.",
-        options: ["which", "when", "where", "who"],
-        answer: 1,
-        exp: "day 是時間名詞，使用 when。"
-    },
-    {
-        q: "3. This is the book _____ I bought last week.",
-        options: ["who", "which", "where", "when"],
-        answer: 1,
-        exp: "book 是物，關係代名詞作受詞，用 which。"
-    },
-    {
-        q: "4. I met a girl _____ brother is a doctor.",
-        options: ["who", "whose", "which", "where"],
-        answer: 1,
-        exp: "whose 表示所屬關係（她的哥哥）。"
-    },
-    {
-        q: "5. The restaurant _____ we had dinner was famous.",
-        options: ["which", "who", "where", "when"],
-        answer: 2,
-        exp: "restaurant 是地點，使用 where。"
-    },
-    {
-        q: "6. We _____ the movie last weekend.",
-        options: ["watch", "watched", "watches", "watching"],
-        answer: 1,
-        exp: "watch a movie 為慣用語，過去式為 watched。"
-    },
-    {
-        q: "7. She _____ a letter last night.",
-        options: ["write", "writes", "wrote", "written"],
-        answer: 2,
-        exp: "write 的過去式是不規則變化 wrote。"
-    },
-    {
-        q: "8. He _____ late for class this morning.",
-        options: ["is", "was", "were", "be"],
-        answer: 1,
-        exp: "主詞是 he，過去式用 was。"
-    },
-    {
-        q: "9. The movie _____ we watched was interesting.",
-        options: ["who", "which", "where", "when"],
-        answer: 1,
-        exp: "movie 是物，關係代名詞用 which。"
-    },
-    {
-        q: "10. They _____ dinner at home yesterday.",
-        options: ["have", "has", "had", "having"],
-        answer: 2,
-        exp: "have 的過去式是 had。"
-    }
-];
+function checkAnswers(){
+    const questions = document.querySelectorAll(".question");
 
-const quizDiv = document.getElementById("quiz");
+    questions.forEach(q=>{
+        const correct = q.dataset.answer;
+        const radios = q.querySelectorAll("input");
+        const feedback = q.querySelector(".feedback");
+        const explanation = q.querySelector(".explanation");
 
-questions.forEach((item, index) => {
-    const qDiv = document.createElement("div");
-    qDiv.className = "question";
-    qDiv.innerHTML = `<p><strong>${item.q}</strong></p>`;
-
-    const optDiv = document.createElement("div");
-    optDiv.className = "options";
-
-    item.options.forEach((opt, i) => {
-        optDiv.innerHTML += `
-            <label>
-                <input type="radio" name="q${index}" value="${i}">
-                ${opt}
-            </label>`;
-    });
-
-    qDiv.appendChild(optDiv);
-
-    const expDiv = document.createElement("div");
-    expDiv.className = "explanation";
-    expDiv.id = "exp" + index;
-    qDiv.appendChild(expDiv);
-
-    quizDiv.appendChild(qDiv);
-});
-
-function submitQuiz() {
-    let correct = 0;
-
-    questions.forEach((item, index) => {
-        const radios = document.getElementsByName("q" + index);
-        let selected = -1;
-
-        radios.forEach(r => {
-            if (r.checked) selected = parseInt(r.value);
+        let chosen = -1;
+        radios.forEach((r,i)=>{
+            if(r.checked) chosen=i;
+            r.disabled = true;
         });
 
-        const expDiv = document.getElementById("exp" + index);
-        expDiv.style.display = "block";
-
-        if (selected === item.answer) {
-            correct++;
-            expDiv.innerHTML = `<span class="correct">✔ 正確</span><br>
-            正確答案：${item.options[item.answer]}<br>
-            解析：${item.exp}`;
-        } else {
-            expDiv.innerHTML = `✘ 錯誤<br>
-            正確答案：${item.options[item.answer]}<br>
-            解析：${item.exp}`;
+        if(chosen == correct){
+            feedback.textContent="✔ 回答正確";
+            feedback.className="feedback correct";
+        }else{
+            feedback.textContent="✘ 回答錯誤";
+            feedback.className="feedback wrong";
         }
+
+        explanation.style.display="block";
     });
 
-    document.getElementById("result").innerText =
-        `答對題數：${correct} / ${questions.length}`;
+    document.getElementById("submitBtn").disabled=true;
 }
 </script>
 
